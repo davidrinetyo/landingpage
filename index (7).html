@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thinkmotions — HR Consulting & Digital Solutions</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #F2F2F0;
+      --ink: #0D0D0D;
+      --gray: #6B6B6B;
+      --blue: #2563EB;
+      --amber: #D97706;
+      --border: #E0E0DC;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'Inter', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── LANG SWITCH ─── */
+    body.lang-id [data-en] { display: none !important; }
+    body.lang-en [data-id] { display: none !important; }
+
+    /* ─── NAV ─── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center;
+      justify-content: space-between;
+      padding: 0 40px; height: 64px;
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 10px;
+      text-decoration: none;
+    }
+    .nav-logo img { height: 36px; width: auto; display: block; }
+    .nav-logo span {
+      font-size: 1.05rem; font-weight: 700;
+      color: var(--ink); letter-spacing: -0.02em;
+    }
+    .nav-center {
+      display: flex; align-items: center; gap: 40px;
+      position: absolute; left: 50%; transform: translateX(-50%);
+    }
+    .nav-center a {
+      font-size: 0.9rem; font-weight: 400;
+      color: var(--gray); text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-center a:hover { color: var(--ink); }
+    .nav-right {
+      display: flex; align-items: center; gap: 14px;
+    }
+
+    /* Language pill */
+    .lang-toggle {
+      display: flex; align-items: center;
+      background: var(--border);
+      border-radius: 20px; padding: 3px; gap: 2px;
+    }
+    .lang-btn {
+      font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 0.08em; padding: 5px 12px;
+      border-radius: 16px; border: none;
+      background: transparent; color: var(--gray);
+      cursor: pointer; transition: background 0.2s, color 0.2s;
+      line-height: 1;
+    }
+    .lang-btn.active { background: var(--ink); color: #fff; }
+
+    .nav-cta {
+      background: var(--ink); color: #fff;
+      padding: 10px 22px; font-size: 0.875rem;
+      font-weight: 600; text-decoration: none;
+      transition: opacity 0.2s; white-space: nowrap;
+    }
+    .nav-cta:hover { opacity: 0.8; }
+
+    /* Hamburger */
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      cursor: pointer; background: none; border: none; padding: 6px 4px;
+    }
+    .hamburger span {
+      display: block; width: 22px; height: 2px;
+      background: var(--ink); transition: all 0.28s;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .mobile-nav {
+      display: none; position: fixed;
+      top: 64px; left: 0; right: 0;
+      background: var(--bg); border-bottom: 1px solid var(--border);
+      padding: 28px 24px 32px;
+      flex-direction: column; gap: 20px; z-index: 99;
+    }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a {
+      font-size: 1rem; color: var(--gray);
+      text-decoration: none; font-weight: 500;
+      transition: color 0.2s;
+    }
+    .mobile-nav a:hover { color: var(--ink); }
+    .mob-lang {
+      display: flex; gap: 8px; margin-top: 4px;
+    }
+    .mob-lang button {
+      font-size: 0.78rem; font-weight: 700;
+      letter-spacing: 0.08em; padding: 6px 16px;
+      border: 1.5px solid var(--border);
+      background: transparent; color: var(--gray);
+      cursor: pointer; border-radius: 2px;
+      transition: all 0.2s;
+    }
+    .mob-lang button.active {
+      background: var(--ink); color: #fff; border-color: var(--ink);
+    }
+    .mob-cta {
+      display: inline-block; background: var(--ink); color: #fff !important;
+      padding: 12px 24px; font-size: 0.9rem; font-weight: 600;
+      text-decoration: none; width: fit-content;
+    }
+
+    /* ─── HERO ─── */
+    #hero {
+      padding: 80px 40px 100px;
+      min-height: calc(100vh - 64px);
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .hero-eyebrow {
+      font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--blue); margin-bottom: 36px;
+    }
+    .hero-headline {
+      font-size: clamp(5rem, 13vw, 10.5rem);
+      font-weight: 900; letter-spacing: -0.045em;
+      line-height: 0.9; color: var(--ink); margin-bottom: 52px;
+    }
+    .hero-bottom {
+      display: flex; align-items: center;
+      gap: 52px; flex-wrap: wrap;
+    }
+    .hero-sub {
+      font-size: 1rem; color: var(--gray);
+      line-height: 1.65; max-width: 340px;
+    }
+    .btn-primary {
+      display: inline-block; background: var(--ink); color: #fff;
+      padding: 16px 40px; font-size: 0.95rem; font-weight: 600;
+      text-decoration: none; white-space: nowrap; transition: opacity 0.2s;
+    }
+    .btn-primary:hover { opacity: 0.78; }
+
+    /* ─── SECTION LABEL ─── */
+    .section-label {
+      font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--gray); margin-bottom: 48px;
+    }
+
+    /* ─── PROCESS ─── */
+    #process {
+      border-top: 1px solid var(--border);
+      padding: 80px 40px 100px;
+    }
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border: 1px solid var(--border);
+    }
+    .process-card {
+      padding: 52px 44px 60px;
+      border-right: 1px solid var(--border);
+      transition: background 0.2s;
+    }
+    .process-card:last-child { border-right: none; }
+    .process-card:hover { background: rgba(255,255,255,0.6); }
+    .process-num {
+      font-size: 0.78rem; font-weight: 500;
+      color: var(--gray); margin-bottom: 36px;
+    }
+    .process-title {
+      font-size: 2rem; font-weight: 800;
+      letter-spacing: -0.03em; color: var(--ink);
+      margin-bottom: 20px; line-height: 1.1;
+    }
+    .process-desc {
+      font-size: 0.9rem; color: var(--gray); line-height: 1.78;
+    }
+
+    /* ─── WORK ─── */
+    #work {
+      border-top: 1px solid var(--border);
+      padding: 80px 40px 100px;
+    }
+    .work-intro {
+      display: flex; align-items: flex-end;
+      justify-content: space-between;
+      gap: 40px; margin-bottom: 60px; flex-wrap: wrap;
+    }
+    .work-heading {
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 800; letter-spacing: -0.035em;
+      color: var(--ink); line-height: 1.05; margin-top: 8px;
+    }
+    .work-note {
+      font-size: 0.88rem; color: var(--gray);
+      max-width: 300px; line-height: 1.75; flex-shrink: 0;
+    }
+    .wk-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .wk-card-b {
+      background: #fff;
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      padding: 36px 32px 40px;
+      transition: border-color 0.25s, box-shadow 0.25s;
+      cursor: default;
+    }
+    .wk-card-b:hover {
+      border-color: var(--amber);
+      box-shadow: 0 0 0 4px rgba(217,119,6,0.1);
+    }
+    .wk-icon-wrap {
+      width: 56px; height: 56px; border-radius: 50%;
+      background: #FEF3E2;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 24px;
+    }
+    .wk-icon-wrap svg {
+      width: 26px; height: 26px; stroke: var(--amber);
+      fill: none; stroke-width: 1.8;
+      stroke-linecap: round; stroke-linejoin: round;
+    }
+    .wk-title {
+      font-size: 1.05rem; font-weight: 700;
+      color: #1a2e4a; margin-bottom: 12px; line-height: 1.3;
+    }
+    .wk-desc {
+      font-size: 0.875rem; color: var(--gray); line-height: 1.75;
+    }
+    .b-cta {
+      display: inline-block; margin-top: 18px;
+      font-size: 0.78rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--amber); text-decoration: none;
+      opacity: 0; transform: translateY(6px);
+      transition: opacity 0.25s, transform 0.25s;
+    }
+    .wk-card-b:hover .b-cta { opacity: 1; transform: translateY(0); }
+
+    /* ─── CONTACT / FOOTER ─── */
+    #contact {
+      border-top: 1px solid var(--border);
+      padding: 80px 40px 0;
+    }
+    .contact-email {
+      display: block;
+      font-size: clamp(1.8rem, 5.5vw, 4.6rem);
+      font-weight: 900; letter-spacing: -0.045em;
+      color: var(--ink); text-decoration: none;
+      line-height: 1.05; margin-bottom: 80px;
+      transition: opacity 0.2s; word-break: break-all;
+    }
+    .contact-email:hover { opacity: 0.55; }
+    .footer-bar {
+      border-top: 1px solid var(--border);
+      padding: 24px 0 28px;
+      display: flex; align-items: center;
+      justify-content: space-between;
+      gap: 16px; flex-wrap: wrap;
+    }
+    .footer-copy { font-size: 0.82rem; color: var(--gray); }
+    .footer-link {
+      font-size: 0.82rem; color: var(--gray);
+      text-decoration: none; transition: color 0.2s;
+    }
+    .footer-link:hover { color: var(--ink); }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      nav { padding: 0 24px; }
+      .nav-center { display: none; }
+      .nav-cta { display: none; }
+      .lang-toggle { display: none; }
+      .hamburger { display: flex; }
+      #hero { padding: 72px 24px 80px; min-height: auto; }
+      .hero-bottom { flex-direction: column; align-items: flex-start; gap: 28px; }
+      .hero-sub { max-width: 100%; }
+      #process { padding: 60px 24px 80px; }
+      .process-grid { grid-template-columns: 1fr; }
+      .process-card {
+        border-right: none; border-bottom: 1px solid var(--border);
+        padding: 40px 28px 48px;
+      }
+      .process-card:last-child { border-bottom: none; }
+      #work { padding: 60px 24px 80px; }
+      .wk-grid { grid-template-columns: 1fr; gap: 16px; }
+      .work-intro { flex-direction: column; align-items: flex-start; gap: 16px; }
+      #contact { padding: 60px 24px 0; }
+    }
+    @media (max-width: 540px) {
+      .contact-email { font-size: clamp(1.5rem, 7vw, 2.8rem); margin-bottom: 56px; }
+      .hero-headline { margin-bottom: 40px; }
+    }
+  </style>
+</head>
+<body class="lang-id">
+
+<!-- ─── NAV ─── -->
+<nav>
+  <a class="nav-logo" href="#hero">
+    <img src="data:image/png;base64,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" alt="Thinkmotions" />
+    <span>Thinkmotions</span>
+  </a>
+
+  <div class="nav-center">
+    <a href="#process" data-id>Proses</a>
+    <a href="#process" data-en>Process</a>
+    <a href="#work" data-id>Proyek</a>
+    <a href="#work" data-en>Work</a>
+    <a href="mailto:hello@thinkmotions.my.id" data-id>Kontak</a>
+    <a href="mailto:hello@thinkmotions.my.id" data-en>Contact</a>
+  </div>
+
+  <div class="nav-right">
+    <div class="lang-toggle">
+      <button class="lang-btn active" id="btnID" onclick="setLang('id')">ID</button>
+      <button class="lang-btn" id="btnEN" onclick="setLang('en')">EN</button>
+    </div>
+    <a class="nav-cta" href="mailto:hello@thinkmotions.my.id">
+      <span data-id>Hubungi Kami</span>
+      <span data-en>Let's talk</span>
+    </a>
+  </div>
+
+  <button class="hamburger" id="hamburger" aria-label="Buka menu" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- Mobile Nav -->
+<div class="mobile-nav" id="mobileNav">
+  <a href="#process" onclick="closeMenu()" data-id>Proses</a>
+  <a href="#process" onclick="closeMenu()" data-en>Process</a>
+  <a href="#work" onclick="closeMenu()" data-id>Proyek</a>
+  <a href="#work" onclick="closeMenu()" data-en>Work</a>
+  <a href="mailto:hello@thinkmotions.my.id" onclick="closeMenu()" data-id>Kontak</a>
+  <a href="mailto:hello@thinkmotions.my.id" onclick="closeMenu()" data-en>Contact</a>
+  <div class="mob-lang">
+    <button id="mobBtnID" class="active" onclick="setLang('id')">ID</button>
+    <button id="mobBtnEN" onclick="setLang('en')">EN</button>
+  </div>
+  <a class="mob-cta" href="mailto:hello@thinkmotions.my.id">
+    <span data-id>Hubungi Kami</span>
+    <span data-en>Let's talk</span>
+  </a>
+</div>
+
+<!-- ─── HERO ─── -->
+<section id="hero">
+  <p class="hero-eyebrow">
+    <span data-id>Terbuka untuk proyek baru</span>
+    <span data-en>Available for new projects</span>
+  </p>
+  <h1 class="hero-headline">Optimize.</h1>
+  <div class="hero-bottom">
+    <p class="hero-sub" data-id>Membangun solusi digital SDM untuk membantu Anda dan organisasi mengoptimalkan operasional secara nyata.</p>
+    <p class="hero-sub" data-en>Crafting digital HR solutions to help you and your organisation optimise operations effectively.</p>
+    <a class="btn-primary" href="mailto:hello@thinkmotions.my.id">
+      <span data-id>Mulai Proyek</span>
+      <span data-en>Start a project</span>
+    </a>
+  </div>
+</section>
+
+<!-- ─── PROCESS ─── -->
+<section id="process">
+  <p class="section-label">
+    <span data-id>Proses Kami</span>
+    <span data-en>Our Process</span>
+  </p>
+  <div class="process-grid">
+
+    <div class="process-card">
+      <div class="process-num">01</div>
+      <h3 class="process-title">
+        <span data-id>Diagnosa</span>
+        <span data-en>Diagnose</span>
+      </h3>
+      <p class="process-desc" data-id>Kami mulai dengan memahami kondisi HR Anda — proses, struktur, dan tantangan nyata di lapangan — sebelum menawarkan solusi apa pun.</p>
+      <p class="process-desc" data-en>We start by understanding your HR landscape — processes, structure, and real on-ground challenges — before proposing any solution.</p>
+    </div>
+
+    <div class="process-card">
+      <div class="process-num">02</div>
+      <h3 class="process-title">
+        <span data-id>Rancang &amp; Bangun</span>
+        <span data-en>Design &amp; Build</span>
+      </h3>
+      <p class="process-desc" data-id>Bersama Anda, kami merancang sistem, SOP, hingga membangun tools digital yang sesuai konteks organisasi dan langsung siap pakai.</p>
+      <p class="process-desc" data-en>Together with you, we design systems, SOPs, and build digital tools tailored to your organisation — ready to use from day one.</p>
+    </div>
+
+    <div class="process-card">
+      <div class="process-num">03</div>
+      <h3 class="process-title">
+        <span data-id>Dampingi</span>
+        <span data-en>Support</span>
+      </h3>
+      <p class="process-desc" data-id>Solusi diimplementasikan, tim HR didampingi, dan kami pastikan hasilnya benar-benar berjalan — bukan sekadar diserahterimakan.</p>
+      <p class="process-desc" data-en>We implement the solution, train your HR team, and ensure it actually works in practice — not just handed over and forgotten.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─── WORK ─── -->
+<section id="work">
+  <div class="work-intro">
+    <div>
+      <p class="section-label">
+        <span data-id>Karya Pilihan</span>
+        <span data-en>Selected Work</span>
+      </p>
+      <h2 class="work-heading">
+        <span data-id>Apa yang<br/>kami bangun.</span>
+        <span data-en>What we<br/>have built.</span>
+      </h2>
+    </div>
+    <p class="work-note" data-id>Arahkan kursor ke setiap kartu untuk mengetahui lebih lanjut tentang apa yang bisa kita bangun bersama.</p>
+    <p class="work-note" data-en>Hover over each card to learn more about what we can build together.</p>
+  </div>
+
+  <div class="wk-grid">
+
+    <div class="wk-card-b">
+      <div class="wk-icon-wrap">
+        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      </div>
+      <div class="wk-title">Talent Database Application</div>
+      <p class="wk-desc" data-id>Membangun perangkat rekrutmen menyeluruh — E-Request Form, Sistem Pelacak Pelamar (ATS), dan alur rekrutmen digital untuk organisasi kesehatan dan bisnis.</p>
+      <p class="wk-desc" data-en>Crafting end-to-end recruitment tools — E-Request Form, Applicant Tracking System (ATS), and digital hiring pipelines for healthcare and business organisations.</p>
+      <a class="b-cta" href="mailto:hello@thinkmotions.my.id">
+        <span data-id>Terbuka untuk diskusi ↗</span>
+        <span data-en>Open to discuss ↗</span>
+      </a>
+    </div>
+
+    <div class="wk-card-b">
+      <div class="wk-icon-wrap">
+        <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+      </div>
+      <div class="wk-title">Talent Development</div>
+      <p class="wk-desc" data-id>Membangun perangkat digital untuk pengembangan karyawan — E-Asesmen dan E-Kompetensi yang disesuaikan dengan struktur dan tujuan organisasi Anda.</p>
+      <p class="wk-desc" data-en>Crafting digital tools for employee growth — E-Assessment and E-Competency frameworks tailored to your organisation's structure and goals.</p>
+      <a class="b-cta" href="mailto:hello@thinkmotions.my.id">
+        <span data-id>Terbuka untuk diskusi ↗</span>
+        <span data-en>Open to discuss ↗</span>
+      </a>
+    </div>
+
+    <div class="wk-card-b">
+      <div class="wk-icon-wrap">
+        <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg>
+      </div>
+      <div class="wk-title">Others Digital Business</div>
+      <p class="wk-desc" data-id>Setiap bisnis itu unik. Kami membangun solusi digital yang sepenuhnya dapat disesuaikan — dari otomasi alur kerja hingga portal HR. Mari wujudkan bersama.</p>
+      <p class="wk-desc" data-en>Every business is unique. We build fully customisable digital solutions — from workflow automation to HR portals. Let's shape it together.</p>
+      <a class="b-cta" href="mailto:hello@thinkmotions.my.id">
+        <span data-id>Terbuka untuk diskusi ↗</span>
+        <span data-en>Open to discuss ↗</span>
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─── CONTACT / FOOTER ─── -->
+<section id="contact">
+  <p class="section-label">
+    <span data-id>Hubungi Kami</span>
+    <span data-en>Get in touch</span>
+  </p>
+  <a class="contact-email" href="mailto:hello@thinkmotions.my.id">
+    hello@thinkmotions.my.id
+  </a>
+  <div class="footer-bar">
+    <span class="footer-copy" data-id>© 2024 Thinkmotions. Hak cipta dilindungi.</span>
+    <span class="footer-copy" data-en>© 2024 Thinkmotions. All rights reserved.</span>
+    <a class="footer-link" href="https://linkedin.com" target="_blank" rel="noopener">LinkedIn</a>
+  </div>
+</section>
+
+<script>
+  function setLang(lang) {
+    document.body.className = 'lang-' + lang;
+    document.documentElement.lang = lang;
+    ['btnID','btnEN'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.classList.toggle('active', id === 'btn' + lang.toUpperCase());
+    });
+    ['mobBtnID','mobBtnEN'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.classList.toggle('active', id === 'mobBtn' + lang.toUpperCase());
+    });
+    try { localStorage.setItem('tm_lang', lang); } catch(e) {}
+  }
+
+  // Load saved preference, default ID
+  try {
+    const saved = localStorage.getItem('tm_lang');
+    if (saved === 'en') setLang('en');
+  } catch(e) {}
+
+  function toggleMenu() {
+    document.getElementById('mobileNav').classList.toggle('open');
+    document.getElementById('hamburger').classList.toggle('open');
+  }
+  function closeMenu() {
+    document.getElementById('mobileNav').classList.remove('open');
+    document.getElementById('hamburger').classList.remove('open');
+  }
+  window.addEventListener('resize', () => { if (window.innerWidth > 900) closeMenu(); });
+</script>
+
+</body>
+</html>
